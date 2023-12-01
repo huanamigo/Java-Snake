@@ -12,10 +12,10 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int UNIT_SIZE = 25;
     static final int SCREEN_HEIGHT = ((int) Math.floor((screenRes.getHeight())/UNIT_SIZE)*UNIT_SIZE) - 3*UNIT_SIZE;
     static final int SCREEN_WIDTH = 650;
-    static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
+    static final int GAME_UNITS =  (SCREEN_WIDTH * SCREEN_HEIGHT) / (UNIT_SIZE*UNIT_SIZE);
     static final int DELAY = 75;
-    final int[] x = new int[GAME_UNITS];
-    final int[] y = new int[GAME_UNITS];
+    final int[] x = new int[GAME_UNITS / (SCREEN_WIDTH / UNIT_SIZE)];
+    final int[] y = new int[GAME_UNITS / (SCREEN_HEIGHT / UNIT_SIZE)];
     int bodyParts = 6;
     int applesEaten = 0;
     int appleX;
@@ -54,9 +54,12 @@ public class GamePanel extends JPanel implements ActionListener {
                 g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             }
             */
+            // draw apple
             g.setColor(Color.red);
             g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
 
+
+            // draw snake
             for (int i = 0; i < bodyParts; i++) {
                 if (i == 0) {
                     g.setColor(Color.green);
@@ -163,22 +166,22 @@ public class GamePanel extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_LEFT -> {
+                case KeyEvent.VK_LEFT, KeyEvent.VK_A -> {
                     if (direction != 'R') {
                         direction = 'L';
                     }
                 }
-                case KeyEvent.VK_RIGHT -> {
+                case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> {
                     if (direction != 'L') {
                         direction = 'R';
                     }
                 }
-                case KeyEvent.VK_UP -> {
+                case KeyEvent.VK_UP, KeyEvent.VK_W -> {
                     if (direction != 'D') {
                         direction = 'U';
                     }
                 }
-                case KeyEvent.VK_DOWN -> {
+                case KeyEvent.VK_DOWN, KeyEvent.VK_S -> {
                     if (direction != 'U') {
                         direction = 'D';
                     }
